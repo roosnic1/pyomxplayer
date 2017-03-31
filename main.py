@@ -1,4 +1,8 @@
 from pyomxplayer import OMXPlayer
-omx = OMXPlayer('test.mp3')
 
+
+def callbackFunc():
+    omx = OMXPlayer('test.mp3', callbackFunc, start_playback=True)
+
+omx = OMXPlayer('test.mp3', callbackFunc)
 omx.toggle_pause()

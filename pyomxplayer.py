@@ -20,7 +20,7 @@ class OMXPlayer(object):
     paused = False
     subtitles_visible = True
 
-    def __init__(self, mediafile, args=None, start_playback=False):
+    def __init__(self, mediafile, song_ended_callback, args=None, start_playback=False):
         if not args:
             args = ""
         cmd = self._LAUNCH_CMD % (mediafile, args)
@@ -28,6 +28,8 @@ class OMXPlayer(object):
         
         self.video = dict()
         self.audio = dict()
+
+        self.song_ended_callback = song_ended_callback
         # Get file properties
         #file_props = self._FILEPROP_REXP.match(self._process.readline()).groups()
         #(self.audio['streams'], self.video['streams'],
@@ -64,7 +66,10 @@ class OMXPlayer(object):
                                             self._DONE_REXP])
             print('get_position_index', index)
             if index == 1: continue
-            elif index in (2, 3): break
+            elif index in (2, 3):
+                if self.song_ended_callback:
+                    self.song_ended_callback()
+                    break
             else:
                 self.position = float(self._process.match.group(1))
             sleep(0.05)

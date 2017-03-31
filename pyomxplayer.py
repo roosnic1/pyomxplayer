@@ -41,7 +41,6 @@ class OMXPlayer(object):
 
         if not start_playback:
             self.toggle_pause()
-        self.toggle_subtitles()
 
 
     def _get_position(self):
@@ -64,9 +63,6 @@ class OMXPlayer(object):
         if self._process.send(self._PAUSE_CMD):
             self.paused = not self.paused
 
-    def toggle_subtitles(self):
-        if self._process.send(self._TOGGLE_SUB_CMD):
-            self.subtitles_visible = not self.subtitles_visible
     def stop(self):
         self._process.send(self._QUIT_CMD)
         self._process.terminate(force=True)
@@ -77,8 +73,6 @@ class OMXPlayer(object):
     def set_audiochannel(self, channel_idx):
         raise NotImplementedError
 
-    def set_subtitles(self, sub_idx):
-        raise NotImplementedError
 
     def set_chapter(self, chapter_idx):
         raise NotImplementedError

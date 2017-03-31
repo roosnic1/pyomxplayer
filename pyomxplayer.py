@@ -52,6 +52,7 @@ class OMXPlayer(object):
                                             self._DONE_REXP])
             if index == 1: continue
             elif index in (2, 3):
+                self.stop()
                 if self.song_ended_callback:
                     self.song_ended_callback()
                     break

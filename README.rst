@@ -1,7 +1,7 @@
 pyomxplayer
 ===========
 Python wrapper module around `OMXPlayer <https://github.com/popcornmix/omxplayer>`_
-for the Raspberry Pi. This fork from `jbaiter >https://github.com/jbaiter/pyomxplayer>`_
+for the Raspberry Pi. This fork from `jbaiter <https://github.com/jbaiter/pyomxplayer>`_
 only plays audio and calls a callback function once the song has ended.
 
 

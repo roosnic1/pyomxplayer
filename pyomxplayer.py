@@ -62,6 +62,7 @@ class OMXPlayer(object):
                                             pexpect.TIMEOUT,
                                             pexpect.EOF,
                                             self._DONE_REXP])
+            print('get_position_index', index)
             if index == 1: continue
             elif index in (2, 3): break
             else:

@@ -18,6 +18,8 @@ class OMXPlayer(object):
     paused = False
     subtitles_visible = True
 
+    should_exit = False
+
     def __init__(self, audiofile, song_ended_callback, args=None, start_playback=False):
         if not args:
             args = ""
@@ -51,19 +53,21 @@ class OMXPlayer(object):
                                             self._DONE_REXP])
             if index == 1: continue
             elif index in (2, 3):
-                self.stop()
-                if self.song_ended_callback:
+                if self.song_ended_callback and not self.should_exit:
                     self.song_ended_callback()
-                    break
+                    self.stop()
+                break
             else:
                 self.position = float(self._process.match.group(1))
             sleep(0.05)
+        return
 
     def toggle_pause(self):
         if self._process.send(self._PAUSE_CMD):
             self.paused = not self.paused
 
     def stop(self):
+        self.should_exit = True
         self._process.send(self._QUIT_CMD)
         self._process.terminate(force=True)
 
